@@ -80,7 +80,7 @@ See: [Functions](#functions)
 ```bash
 if [ -z "$string" ]; then
   echo "String is empty"
-elsif [ -n "$string" ]; then
+elif [ -n "$string" ]; then
   echo "String is not empty"
 fi
 ```
@@ -120,6 +120,8 @@ name="John"
 echo ${name}
 echo ${name/J/j}    #=> "john" (substitution)
 echo ${name:0:2}    #=> "jo" (slicing)
+echo ${name::2}     #=> "jo" (slicing)
+echo ${name::-1}    #=> "joh" (slicing)
 echo ${food:-Cake}  #=> $food or "Cake"
 ```
 
@@ -171,6 +173,20 @@ DIR=${SRC%$BASE}  #=> "/path/to" (dirpath)
 | --- | --- |
 | `${FOO/%from/to}` | Replace suffix |
 | `${FOO/#from/to}` | Replace prefix |
+
+### Comments
+
+```bash
+# Single line comment
+```
+
+```bash
+: '
+This is a
+multi line
+comment
+'
+```
 
 ### Substrings
 
@@ -350,7 +366,7 @@ Conditionals
 # String
 if [ -z "$string" ]; then
   echo "String is empty"
-elsif [ -n "$string" ]; then
+elif [ -n "$string" ]; then
   echo "String is not empty"
 fi
 ```
@@ -444,7 +460,7 @@ set -o globdots    # Wildcards match dotfiles ("*.sh" => ".foo.sh")
 set -o globstar    # Allow ** for recursive matches ('lib/**/*.rb' => 'lib/a/b/c.rb')
 ```
 
-Set `GLOBIGNORE` as a colon-separated list of patterns to be removed from glob 
+Set `GLOBIGNORE` as a colon-separated list of patterns to be removed from glob
 matches.
 
 History
@@ -509,6 +525,7 @@ python hello.py >> output.txt  # stdout to (file), append
 python hello.py 2> error.log   # stderr to (file)
 python hello.py 2>&1           # stderr to stdout
 python hello.py 2>/dev/null    # stderr to (null)
+python hello.py &>/dev/null    # stdout and stderr to (null)
 ```
 
 ```bash
@@ -610,9 +627,9 @@ echo $ans
 read -n 1 ans    # Just one character
 ```
 
-### Process IDs
+### Special variables
 
-| `$?` | PID of last foreground task |
+| `$?` | Exit status of last task |
 | `$!` | PID of last background task |
 | `$$` | PID of shell |
 

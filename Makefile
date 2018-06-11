@@ -6,7 +6,7 @@ update: _site critical
 
 # Builds _site
 _site:
-	bundle exec jekyll build
+	bundle exec jekyll build --incremental
 
 # Builds critical path CSS/JS
 critical: _site
@@ -27,3 +27,18 @@ dev-jekyll:
 		else \
 		bundle exec jekyll serve --safe --trace --drafts --watch --port $(PORT); \
 		fi
+
+test: _site
+	@test -f _site/vim.html
+	@test -f _site/react.html
+	@test -f _site/index.html
+	@grep "<script src" _site/index.html >/dev/null
+	@grep "<script src" _site/vim.html >/dev/null
+	@grep "<script src" _site/react.html >/dev/null
+
+test-warning:
+	@echo "========="
+	@echo "If your build failed at this point, it means"
+	@echo "the site failed to generate. Check the project"
+	@echo "out locally and try to find out why."
+	@echo "========="
